@@ -3,6 +3,7 @@
  */
 package GUI;
 
+import Excepcion.MiError;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import proyectodavidisla.Alumno;
 import proyectodavidisla.DataBase;
 
 public class VentanaAlumno extends JFrame implements ActionListener, WindowListener {
@@ -25,7 +27,6 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
     DataBase db;
 
     public VentanaAlumno(DataBase db) {
-        //El título lo recibirá como parámetro para dar de alta alumnos o profesores
         this.db = db;
         this.setTitle("Alta Alumno");
         this.setVisible(true);
@@ -75,38 +76,52 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
                 "Error", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void alta() {//pasar objeto Alumno como parametro
-        if (compruebaCadena20(nombre.getText())) {
-            if (compruebaCadena20(apellido.getText())) {
-                //lo guardo en la base de datos
+    private void alta() {
+        try{
+            Alumno al=new Alumno(nombre(), apellido(), direccion());
+        
                 String cadena="INSERT INTO alumno (ID_alumno, nombre, apellido, direccion, fecha_nacimiento) VALUES (ID_ALUMNO_SQ.NEXTVAL, '" + 
-                        nombre.getText() + "',  '" + apellido.getText() + "',  '" + direccion.getText()+"', '01/01/2015')";
+                        al.getNombre() + "',  '" + al.getApellido() + "',  '" + al.getDireccion()+"', '01/01/2015')";
                 db.ejecutaUpdate(cadena);
-            } else {
-                ventanaError("El apellido tiene que tener entre 1 y 20 car.");
-            }
-        } else {
-            ventanaError("El nombre tiene que tener entre 1 y 20 car.");
+                JOptionPane.showMessageDialog(null, "Alta realizada correctamente");
+        } catch(MiError me){
+            System.out.println("Error: No se ha dado de alta");
         }
         limpiaPantalla();
     }
-
+    
     private boolean compruebaCadena20(String cadena) {
         return cadena.length() > 0 && cadena.length() <= 20;
     }
     
-    private boolean compruebaFecha(String fecha){
-        boolean esCorrecto=true;
-        String fechaArray[]=fecha.split("/");
-        return esCorrecto;
+    private String nombre() throws MiError{
+        if(compruebaCadena20(nombre.getText())){
+            return nombre.getText();
+        } else{
+            ventanaError("El nombre tiene que tener entre 1 y 20 car.");
+            throw new MiError("Nombre incorrecto");
+        }
     }
     
-    private boolean compruebaDia(String dia){
-        return false;
+    private String apellido() throws MiError{
+        if(compruebaCadena20(apellido.getText())){
+            return apellido.getText();
+        } else{
+            ventanaError("El apellido tiene que tener entre 1 y 20 car.");
+            throw new MiError("Apellido incorrecto");
+        }
     }
     
-   
-
+    private String direccion() throws MiError{
+        if(compruebaCadena20(direccion.getText())){
+            return direccion.getText();
+        } else{
+            ventanaError("Hay que introducir una direccion");
+            throw new MiError("Direccion incorrecta");
+        }
+    }
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
