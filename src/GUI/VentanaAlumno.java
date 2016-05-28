@@ -39,7 +39,7 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
         //Utilizo todo el fondo del JFrame
         contenedor = (JPanel) this.getContentPane();
         //Inicializo un layout
-        contenedor.setLayout(new GridLayout(5, 2, 5, 5));
+        contenedor.setLayout(new GridLayout(4, 2, 5, 5));
         //Inicializo los objetos
         etiquetaNombre = new JLabel("Nombre: ");
         nombre = new JTextField();
@@ -77,51 +77,51 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
     }
 
     private void alta() {
-        try{
-            Alumno al=new Alumno(nombre(), apellido(), direccion());
-        
-                String cadena="INSERT INTO alumno (ID_alumno, nombre, apellido, direccion, fecha_nacimiento) VALUES (ID_ALUMNO_SQ.NEXTVAL, '" + 
-                        al.getNombre() + "',  '" + al.getApellido() + "',  '" + al.getDireccion()+"', '01/01/2015')";
-                db.ejecutaUpdate(cadena);
-                JOptionPane.showMessageDialog(null, "Alta realizada correctamente");
-        } catch(MiError me){
+        Alumno al;
+        try {
+            al = new Alumno(nombre(), apellido(), direccion());
+
+            String cadena = "INSERT INTO alumno (ID_alumno, nombre, apellido, direccion, fecha_nacimiento) VALUES (ID_ALUMNO_SQ.NEXTVAL, '"
+                    + al.getNombre() + "',  '" + al.getApellido() + "',  '" + al.getDireccion() + "', '01/01/2015')";
+            db.ejecutaUpdate(cadena);
+            JOptionPane.showMessageDialog(null, "Se ha dado de alta a " + al.getNombre() + " " + al.getApellido());
+        } catch (MiError me) {
             System.out.println("Error: No se ha dado de alta");
         }
         limpiaPantalla();
     }
-    
+
     private boolean compruebaCadena20(String cadena) {
         return cadena.length() > 0 && cadena.length() <= 20;
     }
-    
-    private String nombre() throws MiError{
-        if(compruebaCadena20(nombre.getText())){
+
+    private String nombre() throws MiError {
+        if (compruebaCadena20(nombre.getText())) {
             return nombre.getText();
-        } else{
+        } else {
             ventanaError("El nombre tiene que tener entre 1 y 20 car.");
             throw new MiError("Nombre incorrecto");
         }
     }
-    
-    private String apellido() throws MiError{
-        if(compruebaCadena20(apellido.getText())){
+
+    private String apellido() throws MiError {
+        if (compruebaCadena20(apellido.getText())) {
             return apellido.getText();
-        } else{
+        } else {
             ventanaError("El apellido tiene que tener entre 1 y 20 car.");
             throw new MiError("Apellido incorrecto");
         }
     }
-    
-    private String direccion() throws MiError{
-        if(compruebaCadena20(direccion.getText())){
+
+    private String direccion() throws MiError {
+        if (compruebaCadena20(direccion.getText())) {
             return direccion.getText();
-        } else{
+        } else {
             ventanaError("Hay que introducir una direccion");
             throw new MiError("Direccion incorrecta");
         }
     }
-    
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -135,7 +135,7 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
 
     @Override
     public void windowOpened(WindowEvent e) {
-       
+
     }
 
     @Override
@@ -143,7 +143,7 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
     }
 
     @Override
-    public void windowClosed(WindowEvent e) {       
+    public void windowClosed(WindowEvent e) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
