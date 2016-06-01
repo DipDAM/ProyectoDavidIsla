@@ -13,16 +13,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Cristina
  */
-public class VentanaListado extends JFrame {
+public class VentanaAlumnos extends JFrame {
 
     JPanel contenedor;
     JTable table;
     DefaultTableModel modelo;
     ResultSet rs;
 
-    public VentanaListado(ResultSet rs) {
+    public VentanaAlumnos(ResultSet rs) {
         this.rs = rs;
-        this.setTitle("Listado");
+        this.setTitle("Alumnos matriculados");
         this.setVisible(true);
         initComponents();
         this.pack();
@@ -39,22 +39,18 @@ public class VentanaListado extends JFrame {
         //Agregamos el JScrollPane al contenedor
         contenedor.add(scrollPane, BorderLayout.CENTER);
         // insertamos los nombres de las celdas cabecera.
-        modelo.addColumn("ID");
         modelo.addColumn("Nombre");
         modelo.addColumn("Apellido");
-        modelo.addColumn("Direccion");
         muestraFilas();
     }
 
     public void muestraFilas() {
-        String fila[] = new String[4];
+        String fila[] = new String[2];
         try {
             while (rs.next()) {
                 //tenemos que crear un array
                 fila[0] = rs.getString(1);
                 fila[1] = rs.getString(2);
-                fila[2] = rs.getString(3);
-                fila[3] = rs.getString(5);
                 modelo.addRow(fila);
             }
         } catch (SQLException ex) {
@@ -63,5 +59,3 @@ public class VentanaListado extends JFrame {
 
     }
 }
-
-

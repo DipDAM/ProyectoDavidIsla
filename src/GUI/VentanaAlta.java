@@ -15,10 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import proyectodavidisla.Alumno;
+import Datos.Alumno;
 import proyectodavidisla.DataBase;
 
-public class VentanaAlumno extends JFrame implements ActionListener, WindowListener {
+public class VentanaAlta extends JFrame implements ActionListener, WindowListener {
 
     JPanel contenedor;
     JButton botonAlta, botonFin;
@@ -26,13 +26,15 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
     JLabel etiquetaNombre, etiquetaApellido, etiquetaDireccion;
     DataBase db;
 
-    public VentanaAlumno(DataBase db) {
+    public VentanaAlta(DataBase db) {
+        System.out.print("Creando VentanaAlta...");
         this.db = db;
         this.setTitle("Alta Alumno");
         this.setVisible(true);
         initComponents();
         this.pack();
         this.setSize(300, 300);
+        System.out.println("Completado");
     }
 
     private void initComponents() {
@@ -77,18 +79,22 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
     }
 
     private void alta() {
+        System.out.print("Intentando dar de alta...");
         Alumno al;
         try {
             al = new Alumno(nombre(), apellido(), direccion());
 
-            String cadena = "INSERT INTO alumno (ID_alumno, nombre, apellido, direccion, fecha_nacimiento) VALUES (ID_ALUMNO_SQ.NEXTVAL, '"
-                    + al.getNombre() + "',  '" + al.getApellido() + "',  '" + al.getDireccion() + "', '01/01/2015')";
+            String cadena = "INSERT INTO alumno (ID_alumno, nombre, apellido, direccion) VALUES (ID_ALUMNO_SQ.NEXTVAL, '"
+                    + al.getNombre() + "',  '" + al.getApellido() + "',  '" + al.getDireccion() + "')";
             db.ejecutaUpdate(cadena);
             JOptionPane.showMessageDialog(null, "Se ha dado de alta a " + al.getNombre() + " " + al.getApellido());
+            System.out.println("Completado");
         } catch (MiError me) {
             System.out.println("Error: No se ha dado de alta");
         }
+        System.out.print("Vaciando campos de texto...");
         limpiaPantalla();
+        System.out.println("Completado");
     }
 
     private boolean compruebaCadena20(String cadena) {
@@ -121,7 +127,7 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
             throw new MiError("Direccion incorrecta");
         }
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -129,7 +135,9 @@ public class VentanaAlumno extends JFrame implements ActionListener, WindowListe
                 alta();
                 break;
             default:
+                System.out.print("Cerrando VentanaAlta...");
                 this.dispose();
+                System.out.println("Completado");
         }
     }
 

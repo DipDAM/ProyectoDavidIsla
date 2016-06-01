@@ -1,6 +1,6 @@
 package proyectodavidisla;
 
-import GUI.Ventana;
+import GUI.VentanaPrincipal;
 
 public class ProyectoDavidIsla {
 
@@ -11,7 +11,7 @@ public class ProyectoDavidIsla {
         String password = "case";
         DataBase db = new DataBaseSegura(bd, user, password, servidor);
         if (db.abrirConexion()) {
-            Ventana v=new Ventana(db);
+            VentanaPrincipal v=new VentanaPrincipal(db);
         }
     }
 

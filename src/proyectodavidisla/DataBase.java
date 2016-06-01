@@ -49,11 +49,15 @@ public class DataBase {
         boolean estado = false;
 
         try {
+            System.out.print("Cargando driver...");
             // Cargar el driver.
             Class.forName("com.mysql.jdbc.Driver");
             DriverManager.registerDriver(new OracleDriver());
+            System.out.println("Completado");
             // Crear conenection a la base de datos.
+            System.out.print("Conectando a la base de datos...");
             conexion = DriverManager.getConnection(servidorMysql + bd, login, password);
+            System.out.println("Completado");
             estado = true;
         } catch (SQLException e) {
             System.out.println("SQL Exception:\n" + e.toString());
@@ -107,19 +111,12 @@ public class DataBase {
         return rs;
     }
 
-    public boolean buscaRegistro(String nombreBuscar) {
+    public boolean buscaAlumno(String idBuscar) {
         ResultSet rs;
-        /*
-        Directamente la consulta sería así
-        rs=db.ejecutaConsulta("SELECT * from alumnos where nombre='" + nombre.getText()+"';");
-        Creo un String con la consulta para ver por consola la inyección de código
-        probaremos poniendo en el nombre: Pepe' or 1='1
-         */
-        String sentencia = "SELECT * from alumnos where nombre='" + nombreBuscar + "';";
+        String sentencia = "SELECT * from notas where alumno_id_alumno='" + idBuscar + "';";
         System.out.println(sentencia);
         rs = ejecutaConsulta(sentencia);
         try {
-            //VIP primero compruebo que rs no es nullo, si lo es, lo segundo no se ejecuta
             if (rs != null) {
                 if (rs.isBeforeFirst()) {
                     VentanaListado vL = new VentanaListado(rs);
@@ -130,12 +127,12 @@ public class DataBase {
         } catch (SQLException ex) {
             System.out.println("Error con la base de datos: " + ex.getMessage());
         }
-        return true; //aunque puede ser que se haya producido la excepción.  contamos conn el mensaje
+        return true;
     }
 
     public void cierraResultSet(ResultSet rs) {
         try {
-            //cerramos el rs. porque garbage no puede eliminar el heap
+            //cerramos el rs
             rs.close();
         } catch (SQLException ex) {
             System.out.println("Error con la base de datos: " + ex.getMessage());
@@ -150,6 +147,10 @@ public class DataBase {
         } catch (SQLException ex) {
             System.out.println("Error sql: " + ex.getMessage());
         }
+    }
+
+    public boolean buscaMateria(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
