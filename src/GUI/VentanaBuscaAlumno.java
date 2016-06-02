@@ -126,6 +126,8 @@ public class VentanaBuscaAlumno extends JFrame implements ActionListener, Window
             limpiaPantalla();
         }
     }
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -135,8 +137,22 @@ public class VentanaBuscaAlumno extends JFrame implements ActionListener, Window
                     case "ver":
                         busca();
                         break;
+                    case "modificar":
+                        if (!db.hayResultado(id.getText())) {
+                            ventanaError("Registro no encontrado");
+                        } else {
+                            VentanaModifica vM=new VentanaModifica(id.getText(), db);
+                            limpiaPantalla();
+                        }
+                        break;
                     default:
-                        VentanaModifica vM=new VentanaModifica(id.getText(), db);
+                        if (!db.hayResultado(id.getText())) {
+                            ventanaError("Registro no encontrado");
+                        } else {
+                            db.borraAlumno(id.getText());
+                            JOptionPane.showMessageDialog(null, "Se ha dado de baja al alumno");
+                            limpiaPantalla();
+                        }
                         break;
                 }
                 

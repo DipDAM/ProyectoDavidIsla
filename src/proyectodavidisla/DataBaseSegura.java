@@ -50,6 +50,31 @@ public class DataBaseSegura extends DataBase {
         return true;
     }
     
+    public boolean hayResultado(String idBuscar) {
+        ResultSet rs;
+        PreparedStatement st;
+        //sustituimos la variable por un ?
+        String sentencia = "select *\n" +
+            "from alumno \n" +
+            "where ID_ALUMNO=?";
+        System.out.println(sentencia);
+        try {
+            st = conexion.prepareCall(sentencia);
+            //pasamos los valores a cada uno de los interrogantes
+            // comenzamos numerando por el 1
+            st.setString(1, idBuscar);
+//            st.setInt(2, 20);
+            rs = st.executeQuery();
+            if(rs.isBeforeFirst()){
+            }else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error on la base de datos: " + ex.getMessage());
+        }
+        return true;
+    }
+    
     public boolean buscaMateria(String idBuscar) {
         ResultSet rs;
         PreparedStatement st;
@@ -71,6 +96,47 @@ public class DataBaseSegura extends DataBase {
             }
         } catch (SQLException ex) {
             System.out.println("Error en la base de datos: " + ex.getMessage());
+        }
+        return true;
+    }
+    
+    @Override
+    public boolean borraAlumno(String idBuscar) {
+        ResultSet rs;
+        PreparedStatement st;
+        //sustituimos la variable por un ?
+        String sentencia1 = "delete from nota where alumno_ID_ALUMNO=?";
+        String sentencia2 = "delete from alumno where ID_ALUMNO=?";
+        System.out.println(sentencia1);
+        try {
+            st = conexion.prepareCall(sentencia1);
+            //pasamos los valores a cada uno de los interrogantes
+            // comenzamos numerando por el 1
+            st.setString(1, idBuscar);
+//            st.setInt(2, 20);
+            rs = st.executeQuery();
+            if(rs.isBeforeFirst()){
+                
+            }else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error on la base de datos: " + ex.getMessage());
+        }
+        try {
+            st = conexion.prepareCall(sentencia2);
+            //pasamos los valores a cada uno de los interrogantes
+            // comenzamos numerando por el 1
+            st.setString(1, idBuscar);
+//            st.setInt(2, 20);
+            rs = st.executeQuery();
+            if(rs.isBeforeFirst()){
+                
+            }else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error on la base de datos: " + ex.getMessage());
         }
         return true;
     }

@@ -33,7 +33,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
     }
 
     private void initComponents() {
-        String textoBotones[] = {"Alta", "Listado Alfabético", "Notas de un alumno", "Alumnos de una materia", "Modificar alumno", "Crear XML","Fin"};
+        String textoBotones[] = {"Alta", "Baja", "Listado Alfabético", "Notas de un alumno", "Alumnos de una materia", "Modificar alumno", "Crear XML","Fin"};
         botones = new JButton[textoBotones.length];
         //Utilizo todo el fondo del JFrame
         contenedor = (JPanel) this.getContentPane();
@@ -58,25 +58,28 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
                 VentanaAlta vA=new VentanaAlta(db);
                 break;
             case "1":
-//                db.recorreResultado(db.ejecutaConsulta("SELECT * from alumnos"));
-                VentanaListado vL=new VentanaListado(db.ejecutaConsulta("SELECT * from alumno order by nombre"));
+                VentanaBuscaAlumno vBA=new VentanaBuscaAlumno(db, "borrar");
                 break;
             case "2":
-                VentanaBuscaAlumno vBA1=new VentanaBuscaAlumno(db, "ver");
+                VentanaListado vL=new VentanaListado(db.ejecutaConsulta("SELECT * from alumno order by nombre"));
                 break;
             case "3":
-                VentanaBuscaMateria vBM=new VentanaBuscaMateria(db);//PEDIR MATERIA, MOSTRAR MATRICULADOS
+                VentanaBuscaAlumno vBA1=new VentanaBuscaAlumno(db, "ver");
                 break;
             case "4":
+                VentanaBuscaMateria vBM=new VentanaBuscaMateria(db);//PEDIR MATERIA, MOSTRAR MATRICULADOS
+                break;
+            case "5":
                 VentanaBuscaAlumno vBA2=new VentanaBuscaAlumno(db, "modificar");
                 //MODIFICA
                 break;
-            case "5":
+            case "6":
                 //CREA XML
                 ArrayList<Alumno> alumnos = new ArrayList();
                 db.pasarDatos(db.ejecutaConsulta("Select * from alumno order by ID_ALUMNO"), alumnos);
                 DocumentoXML doc = new DocumentoXML();
                 doc.escribo("Alumnos", alumnos);
+                break;
             default:
                 fin();
         }

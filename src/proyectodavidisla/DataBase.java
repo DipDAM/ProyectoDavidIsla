@@ -131,6 +131,10 @@ public class DataBase {
         }
         return true;
     }
+    
+    public boolean borraAlumno(String idBuscar){
+        return false;
+    }
 
     public void cierraResultSet(ResultSet rs) {
         try {
@@ -139,6 +143,9 @@ public class DataBase {
         } catch (SQLException ex) {
             System.out.println("Error con la base de datos: " + ex.getMessage());
         }
+    }
+    public boolean hayResultado(String idBuscar){
+        return false;
     }
 
     public void recorreResultado(ResultSet rs) {
