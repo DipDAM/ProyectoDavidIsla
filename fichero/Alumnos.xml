@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Alumnos>
+<Alumno>
+<Nombre>Elena</Nombre>
+<Apellido>Nito del Bosque</Apellido>
+<Direccion>Calle jeros</Direccion>
+</Alumno>
+<Alumno>
+<Nombre>Uno</Nombre>
+<Apellido>Don uno</Apellido>
+<Direccion>C/unito</Direccion>
+</Alumno>
+<Alumno>
+<Nombre>Alberto</Nombre>
+<Apellido>Catetas</Apellido>
+<Direccion>Calle Seya</Direccion>
+</Alumno>
+<Alumno>
+<Nombre>Mary</Nombre>
+<Apellido>Conde Playa</Apellido>
+<Direccion>Avenida Niquita</Direccion>
+</Alumno>
+<Alumno>
+<Nombre>Eva</Nombre>
+<Apellido>Fina Segura</Apellido>
+<Direccion>Calle Noseque</Direccion>
+</Alumno>
+</Alumnos>
