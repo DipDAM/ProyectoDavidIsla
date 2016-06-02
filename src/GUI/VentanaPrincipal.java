@@ -1,14 +1,17 @@
 package GUI;
 
+import Datos.Alumno;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import proyectodavidisla.DataBase;
+import proyectodavidisla.DocumentoXML;
 
 public class VentanaPrincipal extends JFrame implements ActionListener, WindowListener {
 
@@ -30,7 +33,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
     }
 
     private void initComponents() {
-        String textoBotones[] = {"Alta", "Listado Alfabético", "Notas de un alumno", "Alumnos de una materia", "Modificar alumno", "Fin"};
+        String textoBotones[] = {"Alta", "Listado Alfabético", "Notas de un alumno", "Alumnos de una materia", "Modificar alumno", "Crear XML","Fin"};
         botones = new JButton[textoBotones.length];
         //Utilizo todo el fondo del JFrame
         contenedor = (JPanel) this.getContentPane();
@@ -68,6 +71,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
                 VentanaBuscaAlumno vBA2=new VentanaBuscaAlumno(db, "modificar");
                 //MODIFICA
                 break;
+            case "5":
+                //CREA XML
+                ArrayList<Alumno> alumnos = new ArrayList();
+                db.pasarDatos(db.ejecutaConsulta("Select * from alumno order by ID_ALUMNO"), alumnos);
+                DocumentoXML doc = new DocumentoXML();
+                doc.escribo("Alumnos", alumnos);
             default:
                 fin();
         }

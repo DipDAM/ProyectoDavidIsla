@@ -5,7 +5,7 @@
  */
 package proyectodavidisla;
 
-import GUI.VentanaAlumnos;
+import GUI.VentanaMatriculados;
 import GUI.VentanaListado;
 import GUI.VentanaNotas;
 import java.sql.PreparedStatement;
@@ -65,7 +65,7 @@ public class DataBaseSegura extends DataBase {
             st.setString(1, idBuscar);
             rs = st.executeQuery();
             if(rs.isBeforeFirst()){
-                VentanaAlumnos vl = new VentanaAlumnos(rs);
+                VentanaMatriculados vl = new VentanaMatriculados(rs);
             }else{
                 return false;
             }

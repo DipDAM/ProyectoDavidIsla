@@ -1,6 +1,4 @@
-/*
- * Cambia tipo de moneda
- */
+
 package GUI;
 
 import Excepcion.MiError;
@@ -19,7 +17,7 @@ import Datos.Alumno;
 import proyectodavidisla.DataBase;
 
 public class VentanaAlta extends JFrame implements ActionListener, WindowListener {
-
+    String id;
     JPanel contenedor;
     JButton botonAlta, botonFin;
     JTextField nombre, apellido, direccion;
@@ -138,6 +136,7 @@ public class VentanaAlta extends JFrame implements ActionListener, WindowListene
                 System.out.print("Cerrando VentanaAlta...");
                 this.dispose();
                 System.out.println("Completado");
+                break;
         }
     }
 

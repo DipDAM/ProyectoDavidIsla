@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Alumnos>
+<Alumno>
+<Nombre>Elena</Nombre>
+<Apellido>Nito del Bosque</Apellido>
+<Direccion>blablalblalbal</Direccion>
+</Alumno>
+<Alumno>
+<Nombre>Eva</Nombre>
+<Apellido>Fina Segura</Apellido>
+<Direccion>Avenida Niquita</Direccion>
+</Alumno>
+<Alumno>
+<Nombre>Mari</Nombre>
+<Apellido>Conde Playa</Apellido>
+<Direccion>C/ rue del percebe</Direccion>
+</Alumno>
+<Alumno>
+<Nombre>Alberto</Nombre>
+<Apellido>Catetas</Apellido>
+<Direccion>Calle Tana</Direccion>
+</Alumno>
+<Alumno>
+<Nombre>miaumiaumiau</Nombre>
+<Apellido>piopiopio</Apellido>
+<Direccion>cuacuacua</Direccion>
+</Alumno>
+<Alumno>
+<Nombre>Hugh</Nombre>
+<Apellido>Yanus</Apellido>
+<Direccion>asdasd</Direccion>
+</Alumno>
+</Alumnos>

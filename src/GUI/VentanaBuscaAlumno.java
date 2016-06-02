@@ -82,7 +82,7 @@ public class VentanaBuscaAlumno extends JFrame implements ActionListener, Window
         JScrollPane scrollPane = new JScrollPane(table);
         //Agregamos el JScrollPane al contenedor
         contenedorTabla.add(scrollPane, BorderLayout.CENTER);
-        // insertamos los nombres de las celdas cabecera.
+        // insertamos las celdas cabecera.
         modelo.addColumn("ID");
         modelo.addColumn("Nombre");
         modelo.addColumn("Apellido");

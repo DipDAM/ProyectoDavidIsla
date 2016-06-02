@@ -13,14 +13,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Cristina
  */
-public class VentanaAlumnos extends JFrame {
+public class VentanaMatriculados extends JFrame {
 
     JPanel contenedor;
     JTable table;
     DefaultTableModel modelo;
     ResultSet rs;
 
-    public VentanaAlumnos(ResultSet rs) {
+    public VentanaMatriculados(ResultSet rs) {
         this.rs = rs;
         this.setTitle("Alumnos matriculados");
         this.setVisible(true);

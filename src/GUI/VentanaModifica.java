@@ -6,6 +6,7 @@
 package GUI;
 
 import Datos.Alumno;
+import Excepcion.MiError;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ import java.sql.ResultSet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -55,17 +57,17 @@ public class VentanaModifica extends JFrame implements WindowListener, ActionLis
         //Inicializo un layout
         contenedor.setLayout(new GridLayout(4, 2, 5, 5));
         //Inicializo los objetos
-        String  textoEtiquetas[]= {"Nombre","Apellido","Direccion"};
+        String textoEtiquetas[] = {"Nombre", "Apellido", "Direccion"};
         etiquetaDatos = new JLabel[textoEtiquetas.length];
-        datos= new JTextField[textoEtiquetas.length];
-        
-        for(int x=0;x<textoEtiquetas.length;x++){
-            etiquetaDatos[x]=new JLabel(textoEtiquetas[x]);
+        datos = new JTextField[textoEtiquetas.length];
+
+        for (int x = 0; x < textoEtiquetas.length; x++) {
+            etiquetaDatos[x] = new JLabel(textoEtiquetas[x]);
             contenedor.add(etiquetaDatos[x]);
-            datos[x]=new JTextField();
+            datos[x] = new JTextField();
             contenedor.add(datos[x]);
         }
-        
+
         botonAceptar = new JButton();
         botonAceptar.setText("Aceptar");
         botonAceptar.setActionCommand(botonAceptar.getText());
@@ -79,18 +81,85 @@ public class VentanaModifica extends JFrame implements WindowListener, ActionLis
         //Atiendo a la ventana
         this.addWindowListener(this);
     }
-    
+
+    private void modifica() {
+        System.out.print("Intentando modificar el alumno...");
+        Alumno al;
+        try {
+            al = new Alumno(nombre(), apellido(), direccion());
+
+            String cadena = "update alumno set NOMBRE='" + al.getNombre()
+                    + "', apellido='" + al.getApellido() + "', direccion='" + al.getDireccion()
+                    + "'where id_alumno='" + Integer.parseInt(id) + "'";
+            db.ejecutaUpdate(cadena);
+            JOptionPane.showMessageDialog(null, "Ahora los datos del alumno son: " + al.getNombre() + " " + al.getApellido());
+            System.out.println("Completado");
+        } catch (MiError me) {
+            System.out.println("Error: No se han podido modificar los datos");
+        }
+        System.out.print("Vaciando campos de texto...");
+        limpiaPantalla();
+        System.out.println("Completado");
+    }
+
+    private void limpiaPantalla() {
+        for (int x = 0; x < datos.length; x++) {
+            datos[x].setText(null);
+        }
+
+    }
+
+    private boolean compruebaCadena20(String cadena) {
+        return cadena.length() > 0 && cadena.length() <= 20;
+    }
+
+    private String nombre() throws MiError {
+        if (compruebaCadena20(datos[0].getText())) {
+            return datos[0].getText();
+        } else {
+            ventanaError("El nombre tiene que tener entre 1 y 20 car.");
+            throw new MiError("Nombre incorrecto");
+        }
+    }
+
+    private String apellido() throws MiError {
+        if (compruebaCadena20(datos[1].getText())) {
+            return datos[1].getText();
+        } else {
+            ventanaError("El apellido tiene que tener entre 1 y 20 car.");
+            throw new MiError("Apellido incorrecto");
+        }
+    }
+
+    private String direccion() throws MiError {
+        if (compruebaCadena20(datos[2].getText())) {
+            return datos[2].getText();
+        } else {
+            ventanaError("Hay que introducir una direccion");
+            throw new MiError("Direccion incorrecta");
+        }
+    }
+
+    private void ventanaError(String cadena) {
+        JOptionPane.showMessageDialog(
+                this, cadena,
+                "Error", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()){
+        switch (e.getActionCommand()) {
             case "Aceptar":
-                //Alumno al=new Alumno(id, datos[0].getText(), datos[1].getText(), datos[2].getText());
+                modifica();
                 System.out.println("Aceptando...");
                 break;
             default:
-                System.out.println("Cancelando...");
+                System.out.print("Cerrando VentanaModifica...");
+                this.dispose();
+                System.out.println("Completado");
         }
     }
+
     @Override
     public void windowOpened(WindowEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -125,7 +194,5 @@ public class VentanaModifica extends JFrame implements WindowListener, ActionLis
     public void windowDeactivated(WindowEvent e) {
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
 
 }
